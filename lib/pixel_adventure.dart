@@ -1,20 +1,28 @@
 import 'dart:async';
 
+import 'package:flame/cache.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/input.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/painting.dart';
 import 'package:pixel_adventure/components/jump_button.dart';
 import 'package:pixel_adventure/components/player.dart';
 import 'package:pixel_adventure/components/level.dart';
 
-class PixelAdventure extends FlameGame
-    with
-        HasKeyboardHandlerComponents,
-        DragCallbacks,
-        HasCollisionDetection,
-        TapCallbacks {
+const gameAssetsPrefix = "assets/game_assets/game_1";
+const imageAssetsPrefix = "$gameAssetsPrefix/images/";
+const audioAssetsPrefix = "$gameAssetsPrefix/audio/";
+const tileAssetsPrefix = "$gameAssetsPrefix/tiles/";
+
+class PixelAdventure extends FlameGame with HasKeyboardHandlerComponents, DragCallbacks, HasCollisionDetection, TapCallbacks {
+  PixelAdventure() {
+    Flame.images = Images(prefix: imageAssetsPrefix);
+    FlameAudio.updatePrefix(audioAssetsPrefix);
+  }
+
   @override
   Color backgroundColor() => const Color(0xFF211F30);
   late CameraComponent cam;
@@ -23,7 +31,10 @@ class PixelAdventure extends FlameGame
   bool showControls = false;
   bool playSounds = true;
   double soundVolume = 1.0;
-  List<String> levelNames = ['Level-01', 'Level-01'];
+  List<String> levelNames = [
+    'Level-01',
+    'Level-01'
+  ];
   int currentLevelIndex = 0;
 
   @override
@@ -113,7 +124,10 @@ class PixelAdventure extends FlameGame
       );
       cam.viewfinder.anchor = Anchor.topLeft;
 
-      addAll([cam, world]);
+      addAll([
+        cam,
+        world
+      ]);
     });
   }
 }
