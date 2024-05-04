@@ -20,7 +20,7 @@ class Level extends World with HasGameRef<PixelAdventure> {
 
   @override
   FutureOr<void> onLoad() async {
-    level = await TiledComponent.load('$levelName.tmx', Vector2.all(16));
+    level = await TiledComponent.load('$levelName.tmx', Vector2.all(16), prefix: tileAssetsPrefix);
 
     add(level);
 
@@ -35,8 +35,7 @@ class Level extends World with HasGameRef<PixelAdventure> {
     final backgroundLayer = level.tileMap.getLayer('Background');
 
     if (backgroundLayer != null) {
-      final backgroundColor =
-          backgroundLayer.properties.getValue('BackgroundColor');
+      final backgroundColor = backgroundLayer.properties.getValue('BackgroundColor');
       final backgroundTile = BackgroundTile(
         color: backgroundColor ?? 'Gray',
         position: Vector2(0, 0),
